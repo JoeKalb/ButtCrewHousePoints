@@ -2,7 +2,9 @@ const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
 const express = require('express');
-const app = express()
+const app = express();
+const http = require('http').Server(app);
+const path = require('path');
 const port = process.env.PORT || 8000;
 
 // If modifying these scopes, delete token.json.
@@ -69,7 +71,13 @@ function getNewToken(oAuth2Client, callback) {
   });
 }
 
-let housePoints = "";
+let housePointsDisplay = "";
+let houses = {
+  "Gryffindor": 0,
+  "Hufflepuff":0,
+  "Slytherin":0,
+  "Ravenclaw":0
+}
 /**
  * Prints the names and majors of students in a sample spreadsheet:
  * @see https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
@@ -87,7 +95,11 @@ function listMajors(auth) {
     if (rows.length) {
       // Print columns all, which correspond to indices 0 through 3.
 
-      housePoints = `| ${rows[0][0]}: ${rows[1][0]} | ${rows[0][1]}: ${rows[1][1]} | ${rows[0][2]}: ${rows[1][2]} | ${rows[0][3]}: ${rows[1][3]} |`
+      housePointsDisplay = `| ${rows[0][0]}: ${rows[1][0]} | ${rows[0][1]}: ${rows[1][1]} | ${rows[0][2]}: ${rows[1][2]} | ${rows[0][3]}: ${rows[1][3]} |`;
+
+      for(let i = 0; i < 4; ++i)
+        houses[rows[0][i]] = rows[1][i];
+      
     } else {
       console.log('No data found.');
     }
@@ -96,13 +108,28 @@ function listMajors(auth) {
 
 // express calls
 app.get('/', (req, res) => {
-    fs.readFile('credentials.json', (err, content) => {
-        if (err) return console.log('Error loading client secret file:', err);
-        // Authorize a client with credentials, then call the Google Sheets API.
-        authorize(JSON.parse(content), listMajors);
-    });
+  fs.readFile('credentials.json', (err, content) => {
+      if (err) return console.log('Error loading client secret file:', err);
+      // Authorize a client with credentials, then call the Google Sheets API.
+      authorize(JSON.parse(content), listMajors);
+  });
 
-    res.send(housePoints)
+  res.send(housePointsDisplay);
 })
 
+app.get('/houses', (req, res) => {
+  fs.readFile('credentials.json', (err, content) => {
+    if (err) return console.log('Error loading client secret file:', err);
+    // Authorize a client with credentials, then call the Google Sheets API.
+    authorize(JSON.parse(content), listMajors);
+  });
+
+  res.status(200).json(houses);
+})
+
+// rendering an html page
+app.use('/', express.static(path.join(__dirname + '/')));
+app.get('/display', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+})
 app.listen(port, () => console.log(`Listening on port ${port}`));
