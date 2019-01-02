@@ -13,7 +13,7 @@ let initialData = [{
 }];
 
 let textColor = "white"
-let textOutline = "black"
+let textOutline = "white"
 
 // get points
 async function getCurrentPoints(){
@@ -65,6 +65,9 @@ function renderPieChart(){
   ]
 
   series.labels.template.text = "{category}: {value.value}"
+  series.labels.template.disabled = true;
+  series.ticks.template.disabled = true;
+  
 
   series.slices.template.cornerRadius = 10;
   series.slices.template.innerCornerRadius = 7;
