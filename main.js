@@ -12,7 +12,7 @@ let initialData = [{
   "points": 25
 }];
 
-let textColor = "white"
+let textColor = "black"
 let textOutline = "white"
 
 // get points
@@ -51,7 +51,8 @@ function renderPieChart(){
   chart.radius = am4core.percent(70);
   chart.innerRadius = am4core.percent(40);
   chart.startAngle = 180;
-  chart.endAngle = 360;  
+  chart.endAngle = 360;
+   
 
   var series = chart.series.push(new am4charts.PieSeries());
   series.dataFields.value = "points";
@@ -77,12 +78,29 @@ function renderPieChart(){
   series.hiddenState.properties.startAngle = 90;
   series.hiddenState.properties.endAngle = 90;
 
+  /*
   chart.legend = new am4charts.Legend();
+  chart.legend.labels.template.text = ""
   chart.legend.labels.template.fill = textColor
+  chart.legend.labels.disabled = true;
   //chart.legend.labels.template.stroke = textOutline
-  chart.legend.valueLabels.template.text = "{value.value}"
+  chart.legend.valueLabels.template.text = "[bold]{name}: {value.value}"
   chart.legend.valueLabels.template.fill = textColor
   //chart.legend.valueLabels.template.stroke = textOutline
+  //chart.legend.itemContainers.template.paddingBottom = 250;
+  */
+
+
+  // testing labels
+  let label = series.createChild(am4core.Label);
+  label.text = `| ${initialData[0].house}: ${initialData[0].points} | ${initialData[1].house}: ${initialData[1].points} | ${initialData[2].house}: ${initialData[2].points} | ${initialData[3].house}: ${initialData[3].points} |`;
+  label.fontSize = 20;
+  label.fontweight = "bold"
+  label.align = "";
+  label.isMeasured = false;
+  label.x = -300;
+  label.y = 30;
+  label.color = textColor
 }
 
 // get initial points when rendering
