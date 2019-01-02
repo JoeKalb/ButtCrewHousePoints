@@ -79,10 +79,10 @@ function renderPieChart(){
 
   chart.legend = new am4charts.Legend();
   chart.legend.labels.template.fill = textColor
-  chart.legend.labels.template.stroke = textOutline
+  //chart.legend.labels.template.stroke = textOutline
   chart.legend.valueLabels.template.text = "{value.value}"
   chart.legend.valueLabels.template.fill = textColor
-  chart.legend.valueLabels.template.stroke = textOutline
+  //chart.legend.valueLabels.template.stroke = textOutline
 }
 
 // get initial points when rendering
