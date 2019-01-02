@@ -107,7 +107,7 @@ function listMajors(auth) {
 }
 
 // express calls
-app.get('/', (req, res) => {
+app.get('/points', (req, res) => {
   fs.readFile('credentials.json', (err, content) => {
       if (err) return console.log('Error loading client secret file:', err);
       // Authorize a client with credentials, then call the Google Sheets API.
@@ -129,7 +129,8 @@ app.get('/houses', (req, res) => {
 
 // rendering an html page
 app.use('/', express.static(path.join(__dirname + '/')));
-app.get('/display', (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 })
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
