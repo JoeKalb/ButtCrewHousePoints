@@ -1,5 +1,10 @@
+@font-face{
+  src: url(magic-school/MagicSchoolTwo.ttf);
+  font-family: magic;
+}
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+  font-family: -apple-system, BlinkMacSystemFont, magic, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   background-color: transparent;
 }
