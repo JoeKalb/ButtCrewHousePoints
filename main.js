@@ -1,15 +1,19 @@
 let initialData = [{
   "house": "Gryffindor",
-  "points": 25
+  "points": 0,
+  "size":27
 }, {
   "house": "Hufflepuff",
-  "points": 25
+  "points": 0,
+  "size":15
 },{
   "house": "Slytherin",
-  "points": 25
+  "points": 0,
+  "size":30
 },{
   "house": "Ravenclaw",
-  "points": 25
+  "points": 0,
+  "size":25
 }];
 
 let textColor = "white"
@@ -48,11 +52,35 @@ function renderPieChart(){
   chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
 
   chart.data = initialData;
-  chart.radius = am4core.percent(70);
+  chart.radius = am4core.percent(80);
   chart.innerRadius = am4core.percent(25);
   chart.startAngle = 180;
   chart.endAngle = 360;
+
+  // sizes of class
+  // var series2 = chart.series.push(new am4charts.PieSeries())
+  // series2.dataFields.value = "size"
+  // series2.dataFields.category = "house"
+  // series2.slices.template.stroke = am4core.color("#fff")
+  // series2.slices.template.strokeWidth = 2
+  // series2.slices.template.strokeOpacity = 1
+
+  // series2.colors.list = [
+  //   am4core.color("#9c1203"),
+  //   am4core.color("#e3a000"),
+  //   am4core.color("#033807"),
+  //   am4core.color("#00165e")
+  // ]
+
+  // series2.labels.template.text = "{value.value}"
+  // series2.labels.template.disabled = true // get labels to show up
+  // series2.ticks.template.disabled = true
+  // series2.labels.template.radius = am4core.percent(-40)
+  // series2.labels.template.fill = textColor
+  // series2.labels.template.stroke = textOutline
+  // series2.labels.template.fontSize = 40
    
+  // class points
   var series = chart.series.push(new am4charts.PieSeries());
   series.dataFields.value = "points";
   series.dataFields.category = "house";
@@ -74,13 +102,18 @@ function renderPieChart(){
   series.labels.template.stroke = textOutline
   series.labels.template.fontSize = 50
   
-  series.slices.template.cornerRadius = 10;
-  series.slices.template.innerCornerRadius = 7;
+  //series.slices.template.cornerRadius = 10;
+  //series.slices.template.innerCornerRadius = 7;
   series.slices.template.draggable = true;
   series.slices.template.inert = true;
 
+  series.slices.template.stroke = am4core.color("#fff")
+  series.slices.template.strokeWidth = 2
+  series.slices.template.strokeOpacity = 1
+
   series.hiddenState.properties.startAngle = 90;
   series.hiddenState.properties.endAngle = 90;
+
 
   // testing labels
   let label = series.createChild(am4core.Label);
