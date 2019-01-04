@@ -56,6 +56,7 @@ function renderPieChart(){
   chart.innerRadius = am4core.percent(25);
   chart.startAngle = 180;
   chart.endAngle = 360;
+  chart.numberFormatter.numberFormat = "####"
 
   // sizes of class
   // var series2 = chart.series.push(new am4charts.PieSeries())
@@ -88,8 +89,8 @@ function renderPieChart(){
   series.colors.list = [
     am4core.color("#9c1203"),
     am4core.color("#e3a000"),
-    am4core.color("#033807"),
-    am4core.color("#00165e")
+    am4core.color("#145619"),
+    am4core.color("#01228e")
   ]
 
   series.labels.template.text = "{value.value}"
