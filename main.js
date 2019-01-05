@@ -108,7 +108,7 @@ function renderPieChart(){
   series.slices.template.draggable = true;
   series.slices.template.inert = true;
 
-  series.slices.template.stroke = am4core.color("#fff")
+  series.slices.template.stroke = am4core.color("#d74561")
   series.slices.template.strokeWidth = 2
   series.slices.template.strokeOpacity = 1
 
