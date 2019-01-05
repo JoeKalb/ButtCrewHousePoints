@@ -98,7 +98,7 @@ function renderPieChart(){
 
   series.ticks.template.disabled = true;
   series.alignLabels = false;
-  series.labels.template.radius = am4core.percent(-30)
+  series.labels.template.radius = am4core.percent(-50)
   series.labels.template.fill = textColor
   series.labels.template.stroke = textOutline
   series.labels.template.fontSize = 50
@@ -117,16 +117,16 @@ function renderPieChart(){
 
 
   // testing labels
-  let label = series.createChild(am4core.Label);
-  label.text = `| ${initialData[0].house}: ${initialData[0].points} | ${initialData[1].house}: ${initialData[1].points} | ${initialData[2].house}: ${initialData[2].points} | ${initialData[3].house}: ${initialData[3].points} |`;
-  label.fontSize = 50;
-  label.fontWeight = "bold"
-  label.align = "center";
-  label.isMeasured = false;
-  label.x = -610;
-  label.y = 30;
-  label.fill = textColor
-  label.stroke = textOutline
+  // let label = series.createChild(am4core.Label);
+  // label.text = `| ${initialData[0].house}: ${initialData[0].points} | ${initialData[1].house}: ${initialData[1].points} | ${initialData[2].house}: ${initialData[2].points} | ${initialData[3].house}: ${initialData[3].points} |`;
+  // label.fontSize = 50;
+  // label.fontWeight = "bold"
+  // label.align = "center";
+  // label.isMeasured = false;
+  // label.x = -610;
+  // label.y = 30;
+  // label.fill = textColor
+  // label.stroke = textOutline
 }
 
 // get initial points when rendering
