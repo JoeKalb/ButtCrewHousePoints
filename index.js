@@ -6,6 +6,17 @@ const app = express();
 const http = require('http').Server(app);
 const path = require('path');
 const port = process.env.PORT || 8001;
+const bodyParser = require('body-parser')
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended:true}))
+
+
+
+/* app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+}); */
 
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
@@ -19,6 +30,12 @@ fs.readFile('credentials.json', (err, content) => {
   if (err) return console.log('Error loading client secret file:', err);
   // Authorize a client with credentials, then call the Google Sheets API.
   authorize(JSON.parse(content), listMajors);
+});
+
+fs.readFile('credentials.json', (err, content) => {
+  if (err) return console.log('Error loading client secret file:', err);
+  // Authorize a client with credentials, then call the Google Sheets API.
+  authorize(JSON.parse(content), listDonos);
 });
 
 /**
@@ -78,6 +95,9 @@ let houses = {
   "Slytherin":0,
   "Ravenclaw":0
 }
+let houseNames = Object.keys(houses);
+let students = {}
+let highestSingle;
 /**
  * Prints the names and majors of students in a sample spreadsheet:
  * @see https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
@@ -106,6 +126,31 @@ function listMajors(auth) {
   });
 }
 
+function listDonos(auth) {
+  const sheets = google.sheets({version: 'v4', auth});
+  sheets.spreadsheets.values.get({
+    spreadsheetId: '1PtoEmET9AbnX2JwWDwygBKggdQuOZi69-STBMi4mKAw',
+    range: 'Donos!A1:B',
+  }, (err, res) => {
+    if (err) return console.log('The API returned an error: ' + err);
+    const rows = res.data.values;
+   
+    if (rows.length) {
+      // Print columns all, which correspond to indices 0 through 1.
+      highestSingle = rows[1];
+      let length = rows.length
+      for(let i = 2; i < length; ++i)
+        if(Number(highestSingle[1].replace('$', '')) < Number(rows[i][1].replace('$', '')))
+          highestSingle = rows[i]
+
+      return highestSingle;
+    } else {
+      console.log('No data found.');
+    }
+  });
+}
+
+
 // express calls
 app.get('/points', (req, res) => {
   fs.readFile('credentials.json', (err, content) => {
@@ -125,6 +170,26 @@ app.get('/houses', (req, res) => {
   });
 
   res.status(200).json(houses);
+})
+
+app.get('/top', (req, res) => {
+  fs.readFile('credentials.json', (err, content) => {
+      if (err) return console.log('Error loading client secret file:', err);
+      // Authorize a client with credentials, then call the Google Sheets API.
+      authorize(JSON.parse(content), listDonos)
+      
+      res.send(`Current Highest: ${highestSingle[1]} ${houseNames[students[highestSingle[0].toLowerCase()]]}`);
+  });
+})
+
+app.post('/', (req, res) => {
+  try{
+    students = req.body
+    res.status(200).json('Students Updated')
+  }
+  catch(err){
+    res.status(404).json(err)
+  }
 })
 
 // rendering an html page
