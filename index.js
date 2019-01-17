@@ -325,7 +325,7 @@ app.get('/top', (req, res) => {
       // Authorize a client with credentials, then call the Google Sheets API.
       authorize(JSON.parse(content), listDonos)
       
-      res.send(`Current Highest: ${highestSingle[1]} ${houseNames[students[highestSingle[0].toLowerCase()]]}`);
+      res.send(`${houseNames[students[highestSingle[0].toLowerCase()]]}: ${highestSingle[1]}`);
   });
 })
 
