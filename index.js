@@ -95,7 +95,7 @@ let houses = {
   "Slytherin":0,
   "Ravenclaw":0
 }
-let houseNames = Object.keys(houses);
+const houseNames = ['Gryffindor', 'Hufflepuff', 'Slytherin', 'Ravenclaw']
 let students = { 
   joefish5:0,
   oi_atomsk_io:2,
@@ -245,6 +245,9 @@ let students = {
   //gryf = 0, huff = 1, sly = 2, raven = 3
 }
 let highestSingle;
+let highestName;
+let highestAmount;
+let highestHouse;
 /**
  * Prints the names and majors of students in a sample spreadsheet:
  * @see https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
@@ -273,6 +276,12 @@ function listMajors(auth) {
   });
 }
 
+function getHouseName(name){
+  console.log(name)
+  let num = students[name]
+  console.log(num)
+  return `${houseNames[num]}`
+}
 function listDonos(auth) {
   const sheets = google.sheets({version: 'v4', auth});
   sheets.spreadsheets.values.get({
@@ -289,6 +298,10 @@ function listDonos(auth) {
       for(let i = 2; i < length; ++i)
         if(Number(highestSingle[1].replace('$', '')) < Number(rows[i][1].replace('$', '')))
           highestSingle = rows[i]
+      console.log(highestSingle)
+      highestName = highestSingle[0].trim().toLowerCase();
+      highestAmount = highestSingle[1];
+      highestHouse = getHouseName(highestName)
 
       return highestSingle;
     } else {
@@ -321,11 +334,15 @@ app.get('/houses', (req, res) => {
 
 app.get('/top', (req, res) => {
   fs.readFile('credentials.json', (err, content) => {
-      if (err) return console.log('Error loading client secret file:', err);
+      /* if (err) return console.log('Error loading client secret file:', err);
       // Authorize a client with credentials, then call the Google Sheets API.
-      authorize(JSON.parse(content), listDonos)
+      authorize(JSON.parse(content), listDonos) */
+      console.log(highestName)
+      console.log(highestAmount)
+      console.log(highestHouse)
+
       
-      res.send(`${houseNames[students[highestSingle[0].toLowerCase()]]}: ${highestSingle[1]}`);
+      res.send(`${highestHouse}: ${highestAmount}`);
   });
 })
 
