@@ -98,7 +98,7 @@ function renderPieChart(){
 
   series.ticks.template.disabled = true;
   series.alignLabels = false;
-  series.labels.template.radius = am4core.percent(-30)
+  series.labels.template.radius = am4core.percent(-20)
   series.labels.template.fill = textColor
   series.labels.template.stroke = textOutline
   series.labels.template.fontSize = 50
