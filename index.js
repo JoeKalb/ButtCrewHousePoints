@@ -264,8 +264,6 @@ function listMajors(auth) {
     //let allScores = []
     if (rows.length) {
       // Print columns all, which correspond to indices 0 through 3.
-      console.log(rows[0])
-      console.log(rows[1])
       housePointsDisplay = `| ${rows[0][0]}: ${rows[1][0]} | ${rows[0][2]}: ${rows[1][2]} | ${rows[0][4]}: ${rows[1][4]} | ${rows[0][6]}: ${rows[1][6]} |`;
       console.log(housePointsDisplay)
       for(let i = 0; i < 7; i += 2)
@@ -278,9 +276,9 @@ function listMajors(auth) {
 }
 
 function getHouseName(name){
-  console.log(name)
+  //console.log(name)
   let num = students[name]
-  console.log(num)
+  //console.log(num)
   return `${houseNames[num]}`
 }
 function listDonos(auth) {
@@ -299,7 +297,7 @@ function listDonos(auth) {
       for(let i = 2; i < length; ++i)
         if(Number(highestSingle[1].replace('$', '')) < Number(rows[i][1].replace('$', '')))
           highestSingle = rows[i]
-      console.log(highestSingle)
+      //console.log(highestSingle)
       highestName = highestSingle[0].trim().toLowerCase();
       highestAmount = highestSingle[1];
       highestHouse = getHouseName(highestName)
