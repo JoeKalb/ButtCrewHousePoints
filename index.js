@@ -257,17 +257,18 @@ function listMajors(auth) {
   const sheets = google.sheets({version: 'v4', auth});
   sheets.spreadsheets.values.get({
     spreadsheetId: '1PtoEmET9AbnX2JwWDwygBKggdQuOZi69-STBMi4mKAw',
-    range: 'Sheet1!A1:D',
+    range: 'Sheet1!A1:H',
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
     const rows = res.data.values;
     //let allScores = []
     if (rows.length) {
       // Print columns all, which correspond to indices 0 through 3.
-
-      housePointsDisplay = `| ${rows[0][0]}: ${rows[1][0]} | ${rows[0][1]}: ${rows[1][1]} | ${rows[0][2]}: ${rows[1][2]} | ${rows[0][3]}: ${rows[1][3]} |`;
-
-      for(let i = 0; i < 4; ++i)
+      console.log(rows[0])
+      console.log(rows[1])
+      housePointsDisplay = `| ${rows[0][0]}: ${rows[1][0]} | ${rows[0][2]}: ${rows[1][2]} | ${rows[0][4]}: ${rows[1][4]} | ${rows[0][6]}: ${rows[1][6]} |`;
+      console.log(housePointsDisplay)
+      for(let i = 0; i < 7; i += 2)
         houses[rows[0][i]] = rows[1][i];
       
     } else {
