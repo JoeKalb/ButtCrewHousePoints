@@ -257,7 +257,7 @@ function listMajors(auth) {
   const sheets = google.sheets({version: 'v4', auth});
   sheets.spreadsheets.values.get({
     spreadsheetId: '1PtoEmET9AbnX2JwWDwygBKggdQuOZi69-STBMi4mKAw',
-    range: 'Sheet1!A1:H',
+    range: '2020 House Points!A1:H',
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
     const rows = res.data.values;
